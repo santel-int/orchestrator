@@ -9,3 +9,5 @@ class Container(SQLModel, table=True):
     id: UUID = Field(default_factory=uuid4, primary_key=True)
     name: str
 
+    git_url: str = Field(default="") # https://github.com/santel-int/hello-world
+    git_branch: str = Field(default="main")
