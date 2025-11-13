@@ -10,7 +10,7 @@ const buttonStyles = cva(
         primary: "bg-PRIMARY-500 text-white hover:bg-PRIMARY-600 border-PRIMARY-500 hover:border-PRIMARY-600 transition-colors",
         secondary: "bg-PRIMARY-100 text-PRIMARY-500 hover:bg-PRIMARY-200 border-PRIMARY-100 hover:border-PRIMARY-200 transition-colors",
         ghost: "bg-transparent text-PRIMARY-500 hover:bg-PRIMARY-100 border-transparent hover:border-PRIMARY-100 transition-colors",
-        outline: "bg-transparent text-PRIMARY-500 border-PRIMARY-500 hover:bg-PRIMARY-100 hover:border-PRIMARY-600 transition-colors",
+        outline: "bg-transparent text-PRIMARY-500 border-PRIMARY-200 hover:bg-PRIMARY-100 hover:border-PRIMARY-300 transition-colors",
       },
     },
     defaultVariants: {
@@ -19,9 +19,9 @@ const buttonStyles = cva(
   }
 )
 
-export default function Button({ children, style = "primary", color = "gray" }: { children: React.ReactNode, style?: VariantProps<typeof buttonStyles>['style'], color?: ButtonColors }) {
+export default function Button({ children, style = "primary", color = "gray", className, ...props }: { children: React.ReactNode, style?: VariantProps<typeof buttonStyles>['style'], color?: ButtonColors, className?: string, props?: React.HTMLAttributes<HTMLDivElement> }) {
   return (
-    <div className={buttonStyles({ style }).replaceAll("PRIMARY", color)}>
+    <div className={`${buttonStyles({ style }).replaceAll("PRIMARY", color)} ${className}`} {...props}>
       {children}
     </div>
   )
