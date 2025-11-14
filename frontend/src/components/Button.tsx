@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 type ButtonColors = "gray" | "slate" | "zinc" | "neutral" | "stone" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | "violet" | "purple" | "fuchsia" | "pink" | "rose";
 
 const buttonStyles = cva(
-  "flex items-center gap-2 rounded-lg cursor-pointer px-4 py-2 font-medium border-2",
+  "flex items-center gap-2 rounded-lg cursor-pointer px-4 py-2 font-medium border-2 justify-center w-fit",
   {
     variants: {
       style: {
