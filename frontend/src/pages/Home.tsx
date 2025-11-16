@@ -1,4 +1,4 @@
-import Button from '../components/Button'
+import Button from '../components/ui/Button'
 import {
   Heart, Star, Download, Upload, Settings, Search, Bell, User, Mail, 
   Home as HomeIcon, Plus, Minus, X, Check, ArrowRight, ArrowLeft, ChevronDown,

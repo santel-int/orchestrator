@@ -1,8 +1,9 @@
 import { Routes, Route } from 'react-router-dom'
-import Layout from './components/Layout'
+import Layout from './components/ui/Layout'
 import Home from './pages/Home'
 import Containers from './pages/Containers'
 import CreateContainer from './pages/CreateContainer'
+import Container from './pages/Container'
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
 
         <Route path="containers" element={<Containers />} />
         <Route path="containers/create" element={<CreateContainer />} />
+        <Route path="containers/:id" element={<Container />} />
 
         <Route path="*" />
       </Route>

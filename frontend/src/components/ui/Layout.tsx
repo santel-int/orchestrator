@@ -27,7 +27,7 @@ export default function Layout() {
           </div>
         </div>
       </nav>
-      <main className="container mx-auto px-4">
+      <main className="container mx-auto px-4 pb-4">
         <Outlet />
       </main>
     </div>
