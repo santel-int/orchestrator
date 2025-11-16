@@ -21,6 +21,7 @@ class ContainerCreate(BaseModel):
     """Schema for creating a container"""
     name: str
     git_url: str
+    git_branch: Optional[str] = "main"
     env_vars: Optional[List[EnvVarCreate]] = []
     ports: Optional[List[PortCreate]] = []
     volumes: Optional[List[VolumeCreate]] = []

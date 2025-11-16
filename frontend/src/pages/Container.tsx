@@ -1,19 +1,21 @@
 import { useState, useEffect } from "react"
-import { useParams, Link } from "react-router-dom"
-import type { EnvVar } from "../types/container"
+import { useParams } from "react-router-dom"
+import type { EnvVar, Port } from "../types/container"
 import Loader from "../components/ui/Loader"
+import ContainerDetails from "../components/forms/ContainerDetails"
 
-type ContainerDetails = {
+type ContainerData = {
   id: string
   name: string
   git_url: string
   git_branch: string
   env_vars?: EnvVar[]
+  ports?: Port[]
 }
 
 export default function Container() {
   const { id } = useParams<{ id: string }>()
-  const [container, setContainer] = useState<ContainerDetails | null>(null)
+  const [container, setContainer] = useState<ContainerData | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
@@ -59,9 +61,6 @@ export default function Container() {
       <div>
         <h1 className="text-3xl font-bold text-gray-900">Container Details</h1>
         <p className="text-red-500 mt-4">{error || "Container not found"}</p>
-        <Link to="/containers" className="text-blue-500 mt-4 inline-block">
-          Back to Containers
-        </Link>
       </div>
     )
   }
@@ -71,47 +70,21 @@ export default function Container() {
       <div>
         <h1 className="text-3xl font-bold text-gray-900">Container Details</h1>
         <p className="text-sm text-gray-500 mt-1">
-          View container information and configuration.
+          Edit container information and configuration.
         </p>
       </div>
 
-      <div className="grid gap-4">
-        <div>
-          <h2 className="text-lg font-semibold text-gray-700 mb-2">Name</h2>
-          <p className="text-gray-900">{container.name}</p>
-        </div>
-
-        <div>
-          <h2 className="text-lg font-semibold text-gray-700 mb-2">Git URL</h2>
-          <p className="text-gray-900">{container.git_url}</p>
-        </div>
-
-        <div>
-          <h2 className="text-lg font-semibold text-gray-700 mb-2">Git Branch</h2>
-          <p className="text-gray-900">{container.git_branch}</p>
-        </div>
-
-        <div>
-          <h2 className="text-lg font-semibold text-gray-700 mb-2">Environment Variables</h2>
-          {container.env_vars && container.env_vars.length > 0 ? (
-            <div className="grid gap-2">
-              {container.env_vars.map((envVar, index) => (
-                <div key={index} className="text-gray-900">
-                  <span className="font-mono">{envVar.key}</span> = <span className="font-mono">{envVar.value}</span>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-gray-500">No environment variables configured</p>
-          )}
-        </div>
-      </div>
-
-      <div className="mt-4">
-        <Link to="/containers" className="text-blue-500">
-          Back to Containers
-        </Link>
-      </div>
+      <ContainerDetails
+        submitButtonText="Update Container"
+        containerId={container.id}
+        initialData={{
+          name: container.name,
+          git_url: container.git_url,
+          git_branch: container.git_branch,
+          env_vars: container.env_vars || [],
+          ports: container.ports || [],
+        }}
+      />
     </div>
   )
 }
