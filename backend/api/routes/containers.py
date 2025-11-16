@@ -6,12 +6,12 @@ from typing import List
 from uuid import UUID
 
 from database import get_session
-from models.container import Container, ContainerEnvVar, ContainerPort, ContainerVolume
-from schemas.container import ContainerCreate, ContainerResponse
+from models.container import Container, ContainerEnvVar, ContainerPort
+from schemas.container import ContainerCreate, ContainerListResponse, ContainerResponse
 
 router = fastapi.APIRouter(prefix="/containers", tags=["containers"])
 
-@router.get("/", response_model=List[ContainerResponse])
+@router.get("/", response_model=List[ContainerListResponse])
 def get_containers(session: Session = Depends(get_session)):
     """Get all containers"""
     statement = select(Container)
@@ -21,9 +21,7 @@ def get_containers(session: Session = Depends(get_session)):
 @router.get("/{container_id}", response_model=ContainerResponse)
 def get_container(container_id: UUID, session: Session = Depends(get_session)):
     """Get a single container by ID"""
-    statement = select(Container).options(
-        selectinload(Container.env_vars)
-    ).where(Container.id == container_id)
+    statement = select(Container).where(Container.id == container_id)
     container = session.exec(statement).first()
     if not container:
         raise HTTPException(status_code=404, detail="Container not found")
@@ -40,10 +38,7 @@ def create_container(data: ContainerCreate, session: Session = Depends(get_sessi
     for port in data.ports:
         container.ports.append(ContainerPort(host=port.host, container=port.container))
     
-    for volume in data.volumes:
-        container.volumes.append(ContainerVolume(name=volume.name, mount_path=volume.mount_path))
-
-    session.add_all([container, *container.env_vars, *container.ports, *container.volumes])
+    session.add_all([container, *container.env_vars, *container.ports])
     session.commit()
     session.refresh(container)
     return container

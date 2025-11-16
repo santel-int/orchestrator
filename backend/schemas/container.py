@@ -33,6 +33,17 @@ class EnvVarResponse(BaseModel):
     class Config:
         from_attributes = True
 
+class PortResponse(BaseModel):
+    """Schema for port response"""
+    host: str
+    container: str
+
+class ContainerListResponse(BaseModel):
+    """Schema for container list response"""
+    id: UUID
+    name: str
+    git_url: str
+
 class ContainerResponse(BaseModel):
     """Schema for container response"""
     id: UUID
@@ -40,8 +51,10 @@ class ContainerResponse(BaseModel):
 
     git_url: str
     git_branch: str
+
     env_vars: Optional[List[EnvVarResponse]] = []
-    
+    ports: Optional[List[PortResponse]] = []
+
     class Config:
         from_attributes = True
 

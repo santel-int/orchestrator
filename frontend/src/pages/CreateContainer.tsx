@@ -27,6 +27,10 @@ export default function CreateContainer() {
         body: JSON.stringify({
           name,
           git_url: gitUrl,
+          git_branch: gitBranch,
+          env_vars: envVars,
+          ports: ports,
+          // volumes: volumes,
         }),
       })
 
@@ -56,7 +60,7 @@ export default function CreateContainer() {
 
   const envVarsHandler = createItemHandler(envVars, setEnvVars)
   const portsHandler = createItemHandler(ports, setPorts)
-  const volumesHandler = createItemHandler(volumes, setVolumes)
+  // const volumesHandler = createItemHandler(volumes, setVolumes)
 
   return (
     <div className="w-full max-w-3xl grid gap-4">
@@ -141,7 +145,7 @@ export default function CreateContainer() {
           }
         />
 
-        <KeyValueSection
+        {/* <KeyValueSection
           title="Volumes"
           description="Mount shared volumes to your container."
           items={volumes}
@@ -157,7 +161,7 @@ export default function CreateContainer() {
           onUpdate={(index, field, value) =>
             volumesHandler.onUpdate(index, field, value)
           }
-        />
+        /> */}
 
         <div className="flex gap-4">
           <button type="submit">

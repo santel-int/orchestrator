@@ -17,7 +17,6 @@ class Container(SQLModel, table=True):
 
     env_vars: List["ContainerEnvVar"] = Relationship(back_populates="container")
     ports: List["ContainerPort"] = Relationship(back_populates="container")
-    volumes: List["ContainerVolume"] = Relationship(back_populates="container")
 
 class ContainerEnvVar(SQLModel, table=True):
     """Container environment variable model for database"""
@@ -40,14 +39,3 @@ class ContainerPort(SQLModel, table=True):
     container: str = Field(index=True)
 
     container: Container = Relationship(back_populates="ports")
-
-class ContainerVolume(SQLModel, table=True):
-    """Container volume model for database"""
-    __tablename__ = "container_volumes"
-    
-    id: UUID = Field(default_factory=uuid4, primary_key=True)
-    container_id: UUID = Field(foreign_key="containers.id")
-    name: str = Field(index=True)
-    mount_path: str = Field(index=True)
-
-    container: Container = Relationship(back_populates="volumes")
